@@ -1,11 +1,24 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { ColumnId, useTasksStore } from '../../store/tasks';
 
 interface ColumnProps {
   open: boolean;
+  columnId: ColumnId;
   onClose: () => void;
 }
 
-export default function AddTaskModal({ open, onClose }: ColumnProps) {
+export default function AddTaskModal({ open, onClose, columnId }: ColumnProps) {
+  const addNewTask = useTasksStore((store) => store.addNewTask);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    addNewTask({
+      id: new Date().getTime(),
+      columnId,
+      title: e.target.title.value,
+    });
+    onClose();
+  };
+
   return (
     <Modal
       open={open}
@@ -15,11 +28,12 @@ export default function AddTaskModal({ open, onClose }: ColumnProps) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={{ p: 1, background: '#fff', width: 600, maxWidth: '100%' }}>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Typography variant="h5" sx={{ mb: 1 }}>
             Add new task
           </Typography>
           <TextField
+            name="title"
             sx={{ width: '100%' }}
             id="outlined-basic"
             type="text"
@@ -33,7 +47,9 @@ export default function AddTaskModal({ open, onClose }: ColumnProps) {
               justifyContent: 'end',
             }}
           >
-            <Button variant="contained">Add task</Button>
+            <Button type="submit" variant="contained">
+              Add task
+            </Button>
           </Box>
         </form>
       </Box>

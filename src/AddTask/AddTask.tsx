@@ -1,12 +1,14 @@
 import { Button } from '@mui/material';
 import * as React from 'react';
 import AddTaskModal from './AddTaskModal';
+import { ColumnId } from '../store/tasks';
 interface AddTaskProps {
   onClick?: () => void;
+  columnId: ColumnId;
   sx: any;
 }
 
-export default function AddTask({ sx }: AddTaskProps) {
+export default function AddTask({ sx, columnId }: AddTaskProps) {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -34,7 +36,7 @@ export default function AddTask({ sx }: AddTaskProps) {
       >
         Add new task
       </Button>
-      <AddTaskModal open={open} onClose={handleClose} />
+      <AddTaskModal columnId={columnId} open={open} onClose={handleClose} />
     </>
   );
 }

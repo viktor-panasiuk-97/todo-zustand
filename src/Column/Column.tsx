@@ -1,12 +1,14 @@
 import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import AddTask from '../AddTask';
+import { ColumnId } from '../store/tasks';
 interface ColumnProps {
   title: string;
+  id: ColumnId;
   children?: ReactNode;
 }
 
-export default function Column({ title, children }: ColumnProps) {
+export default function Column({ id, title, children }: ColumnProps) {
   return (
     <Box sx={{ p: 0.25 }}>
       <Box
@@ -32,7 +34,7 @@ export default function Column({ title, children }: ColumnProps) {
         }}
       >
         {children}
-        <AddTask sx={{ mt: 0.5 }} />
+        <AddTask columnId={id} sx={{ mt: 0.5 }} />
       </Box>
     </Box>
   );

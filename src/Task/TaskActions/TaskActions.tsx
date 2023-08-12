@@ -9,16 +9,24 @@ import {
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import * as React from 'react';
-
-export default function TaskActions() {
+import { ColumnId, COLUMNS, TaskId, useTasksStore } from '../../store/tasks';
+interface TaskActionsProps {
+  taskId: TaskId;
+}
+export default function TaskActions({ taskId }: TaskActionsProps) {
   const [open, setOpen] = React.useState(false);
-
+  const moveTask = useTasksStore((store) => store.moveTask);
+  const task = useTasksStore((store) => store.tasks[taskId]);
   const handleTooltipClose = () => {
     setOpen(false);
   };
 
   const handleTooltipOpen = () => {
     setOpen(true);
+  };
+
+  const moveTicketTo = (toColumnId: ColumnId) => {
+    moveTask(taskId, task.columnId, toColumnId);
   };
 
   return (
@@ -41,21 +49,16 @@ export default function TaskActions() {
         disableTouchListener
         title={
           <List sx={{ p: 0 }}>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Todo" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="InProgress" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Done" />
-              </ListItemButton>
-            </ListItem>
+            {COLUMNS.map(({ id, label }) => (
+              <ListItem disablePadding key={id}>
+                <ListItemButton
+                  disabled={id === task.columnId}
+                  onClick={() => moveTicketTo(id)}
+                >
+                  <ListItemText primary={label} />
+                </ListItemButton>
+              </ListItem>
+            ))}
           </List>
         }
       >

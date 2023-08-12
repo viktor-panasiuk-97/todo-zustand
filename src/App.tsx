@@ -2,22 +2,22 @@ import React from 'react';
 import { Grid, Container } from '@mui/material';
 import Column from './Column';
 import Task from './Task';
+import { COLUMNS, useTasksStore } from './store/tasks';
 
 function App() {
+  const columnsList = useTasksStore((store) => store.columnsList);
   return (
     <Container>
       <Grid container>
-        <Grid xs={4}>
-          <Column title="To Do">
-            <Task title="Implement todo via zustand." />
-          </Column>
-        </Grid>
-        <Grid xs={4}>
-          <Column title="In Progress" />
-        </Grid>
-        <Grid xs={4}>
-          <Column title="Done" />
-        </Grid>
+        {COLUMNS.map(({ label, id }) => (
+          <Grid xs={4} key={label}>
+            <Column title={label} id={id}>
+              {columnsList[id].map((taskId) => (
+                <Task key={taskId} id={taskId} />
+              ))}
+            </Column>
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );
