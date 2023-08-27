@@ -48,7 +48,7 @@ export default function TaskActions({ taskId }: TaskActionsProps) {
         disableFocusListener
         disableTouchListener
         title={
-          <List sx={{ p: 0 }}>
+          <List sx={{ p: 0 }} data-testid="task-actions-list">
             {COLUMNS.map(({ id, label }) => (
               <ListItem disablePadding key={id}>
                 <ListItemButton
@@ -62,7 +62,11 @@ export default function TaskActions({ taskId }: TaskActionsProps) {
           </List>
         }
       >
-        <IconButton aria-label="settings" onClick={handleTooltipOpen}>
+        <IconButton
+          data-testid="task-actions-btn"
+          aria-label="settings"
+          onClick={handleTooltipOpen}
+        >
           <MoreVertIcon />
         </IconButton>
       </Tooltip>

@@ -21,6 +21,7 @@ export default function AddTask({ sx, columnId }: AddTaskProps) {
   return (
     <>
       <Button
+        data-testid="add-task__open-modal-btn"
         onClick={handleOpen}
         sx={{
           width: '100%',

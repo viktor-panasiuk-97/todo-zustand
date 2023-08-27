@@ -10,7 +10,7 @@ function App() {
     <Container>
       <Grid container>
         {COLUMNS.map(({ label, id }) => (
-          <Grid xs={4} key={label}>
+          <Grid xs={4} key={label} data-testid={`column-${id}`}>
             <Column title={label} id={id}>
               {columnsList[id].map((taskId) => (
                 <Task key={taskId} id={taskId} />

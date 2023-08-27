@@ -14,7 +14,7 @@ type Column = { label: string; id: ColumnId };
 interface TasksStore {
   tasks: Record<TaskId, Task>;
   columnsList: Record<ColumnId, Array<TaskId>>;
-  addNewTask: (task: Task) => void;
+  addNewTask: (task: { columnId: ColumnId; title: Task['title'] }) => void;
   moveTask: (
     targetTaskId: TaskId,
     fromColumnId: ColumnId,
@@ -43,16 +43,20 @@ export const useTasksStore = create<TasksStore>((set) => ({
   tasks: {},
   columnsList: Object.fromEntries(COLUMNS.map((column) => [column.id, []])),
   addNewTask: (task) => {
-    set((state) => ({
-      tasks: {
-        ...state.tasks,
-        [task.id]: { ...task, state: 0 },
-      },
-      columnsList: {
-        ...state.columnsList,
-        [task.columnId]: state.columnsList[task.columnId].concat(task.id),
-      },
-    }));
+    set((state) => {
+      const id = Object.keys(state.tasks).length;
+
+      return {
+        tasks: {
+          ...state.tasks,
+          [id]: { ...task, id, state: 0 },
+        },
+        columnsList: {
+          ...state.columnsList,
+          [task.columnId]: state.columnsList[task.columnId].concat(id),
+        },
+      };
+    });
   },
   moveTask: (targetTaskId, fromColumnId, toColumnId) => {
     set((state) => ({

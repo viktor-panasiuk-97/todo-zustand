@@ -12,7 +12,6 @@ export default function AddTaskModal({ open, onClose, columnId }: ColumnProps) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     addNewTask({
-      id: new Date().getTime(),
       columnId,
       title: e.target.title.value,
     });
@@ -33,6 +32,9 @@ export default function AddTaskModal({ open, onClose, columnId }: ColumnProps) {
             Add new task
           </Typography>
           <TextField
+            inputProps={{
+              'data-testid': 'add-task__field-name',
+            }}
             name="title"
             sx={{ width: '100%' }}
             id="outlined-basic"
@@ -47,7 +49,11 @@ export default function AddTaskModal({ open, onClose, columnId }: ColumnProps) {
               justifyContent: 'end',
             }}
           >
-            <Button type="submit" variant="contained">
+            <Button
+              data-testid="add-task__submit-btn"
+              type="submit"
+              variant="contained"
+            >
               Add task
             </Button>
           </Box>
