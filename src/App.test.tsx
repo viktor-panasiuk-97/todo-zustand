@@ -1,9 +1,10 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import App from "./App";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-test("renders learn react link", () => {
+test('should render 3 columns', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText('Todo')).toBeInTheDocument();
+  expect(screen.getByText('InProgress')).toBeInTheDocument();
+  expect(screen.getByText('Done')).toBeInTheDocument();
 });
