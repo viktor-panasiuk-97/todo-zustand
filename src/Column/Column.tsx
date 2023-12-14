@@ -15,7 +15,7 @@ export default function Column({ id, title, children }: ColumnProps) {
         sx={{
           p: 2,
           borderRadius: 4,
-          backgroundColor: 'primary.main',
+          backgroundColor: '#9e9d24',
           color: 'white',
           textAlign: 'center',
         }}
